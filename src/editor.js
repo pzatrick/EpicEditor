@@ -291,8 +291,8 @@
         , focusOnLoad: false
         , shortcut: { modifier: 18 // alt keycode
           , fullscreen: 70 // f keycode
-          , preview: 80 // p keycode
-          , edit: 79 // o keycode
+          , preview: 86 // p keycode
+          , edit: 86 // o keycode
           }
         , parser: typeof marked == 'function' ? marked : null
         }
@@ -907,6 +907,19 @@
     
     self.emit('preview');
     return self;
+  }
+
+  EpicEditor.prototype.getContents = function () {
+    var self = this;
+
+    return $(self.editor).text()
+  }
+
+  EpicEditor.prototype.setContents = function (text) {
+    var self = this;
+
+    $(self.editor).text(text)
+    return this;
   }
 
   /**
