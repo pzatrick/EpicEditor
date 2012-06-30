@@ -378,6 +378,8 @@
     return this;
   }
 
+  var _gfs;
+
   /**
    * Inserts the EpicEditor into the DOM via an iframe and gets it ready for editing and previewing
    * @returns {object} EpicEditor will be returned
@@ -542,7 +544,7 @@
     utilBtns = self.iframe.getElementById('epiceditor-utilbar');
 
     _elementStates = {}
-    _goFullscreen = function (el) {
+    _gfs = _goFullscreen = function (el) {
       
       if (self.eeState.fullscreen) {
         _exitFullscreen(el);
@@ -909,18 +911,24 @@
     return self;
   }
 
-  EpicEditor.prototype.getContents = function () {
-    var self = this;
-
-    return $(self.editor).text()
+  EpicEditor.prototype.getText = function () {
+    return _getText(this.editor);
   }
 
-  EpicEditor.prototype.setContents = function (text) {
-    var self = this;
-
-    $(self.editor).text(text)
+  EpicEditor.prototype.setText = function (text) {
+    _setText(this.editor, text)
     return this;
   }
+
+  EpicEditor.prototype.setFullscreen = function (fullscreen) {
+    var fsElement = this.iframeElement;
+    if (fullscreen) {
+      _gfs(fsElement);
+    }
+    // else
+    //   _exitFullscreen(fsElement)
+  }
+    
 
   /**
    * Hides the preview and shows the editor again
